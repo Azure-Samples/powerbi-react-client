@@ -18,8 +18,8 @@ export class Embed extends Component {
   }
 
   componentDidUpdate() {
-    if (this.validateConfig(this.state.options)) {
-      return this.embed(this.state.options);
+    if (this.validateConfig(this.state)) {
+      return this.embed(this.state);
     }
     else if (this.component !== null) {
       this.reset();
@@ -51,11 +51,13 @@ export class Embed extends Component {
   validateConfig(config) {
     let errors;
 
-    if (config.type === pbi.Report.type) {
-      errors = pbi.models.validateReportLoad(config);
-    }
-    else if (config.type === pbi.Dashboard.type) {
-      errors = pbi.models.validateDashboardLoad(config);
+    if (typeof config === "object" && typeof config.type === "string") {
+      if (config.type === pbi.Report.type.toLowerCase()) {
+        errors = pbi.models.validateReportLoad(config);
+      }
+      else if (config.type === pbi.Dashboard.type.toLowerCase()) {
+        errors = pbi.models.validateDashboardLoad(config);
+      }
     }
     else {
       return false;
@@ -71,7 +73,7 @@ export class Embed extends Component {
   }
 }
 
-Report.propTypes = {
+Embed.propTypes = {
   options: React.PropTypes.any
 }
 
