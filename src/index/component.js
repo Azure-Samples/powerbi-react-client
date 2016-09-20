@@ -12,7 +12,6 @@ export default class extends Component {
   }
 
   componentDidMount() {
-    console.log('index componentDidMount', this.props);
     fetch(`https://powerbiembedapi.azurewebsites.net/api/reports/c52af8ab-0468-4165-92af-dc39858d66ad`)
       .then(response => {
         if (response.ok) {
@@ -27,7 +26,6 @@ export default class extends Component {
           embedConfig
         });
 
-        console.log(embedConfig);
         return embedConfig;
       });
   }
